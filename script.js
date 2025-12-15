@@ -181,6 +181,7 @@ function signInValidation() {
     window.location.href = "dashboard.html";
   } else {
     alert("Invalid Username or Password");
+    resetForm(form2)
   }
 }
 

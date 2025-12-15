@@ -151,29 +151,6 @@ h1{
     background: #00996d;
     color: white;
 }
-/* .searchDiv{
-  position: fixed;
-  top:200px; 
-  padding: 5px; 
-  z-index: 2; 
-  width:100%; 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.searchName{
-  color: whitesmoke;
-  margin-left: 10px;
-  border: none;
-  padding: 5px;
-  border-radius: 5px;
-  background-color: #313131;
-}
-.searchDiv input[type="search"]{
-  padding: 2px;
-  width: 300px;
-  ou
-}  */
 
 /* TASK CARDS */
 .task-container {
@@ -195,13 +172,12 @@ h1{
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.06);
   color: #eaeaea;
   font-family: "Poppins", sans-serif;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  animation: fadeIn 0.9s ease forwards;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
-
-/* Hover premium effect */
 .task-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 0 30px rgba(255, 255, 255, 0.12);
+  transform: translateY(-8px) scale(1.02) !important;
+  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.15);
 }
 
 /* Title */
@@ -275,10 +251,11 @@ h1{
     cursor: pointer;
     transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
-.add-btn:hover{
-  transform: translateY(-6px);
-  box-shadow: 0 0 30px rgba(60, 255, 0, 0.12);
+.add-btn:hover {
+  transform: translateY(-5px) scale(1.1);
+  box-shadow: 0 10px 25px rgba(0, 255, 80, 0.3);
 }
+
 
 /* TASK POPUP */
 .task-popup {
@@ -293,6 +270,15 @@ h1{
   align-items: center;
   z-index: 2;
 }
+.task-popup {
+  animation: fadeInPopup 0.3s ease;
+}
+
+@keyframes fadeInPopup {
+  from { background: rgba(0,0,0,0); }
+  to { background: rgba(0,0,0,0.6); }
+}
+
 .popup-content input[type="date"]:hover,
 .popup-content select:hover{
   cursor: pointer;
@@ -305,6 +291,18 @@ h1{
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+.popup-content {
+  transform: scale(0.9);
+  opacity: 0;
+  animation: zoomIn 0.3s ease forwards;
+}
+
+@keyframes zoomIn {
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 .popup-content h2 {
   text-align: center;
@@ -349,4 +347,38 @@ h1{
   color: #fff !important;
   font-weight: 700;
   box-shadow: 0 0 15px rgba(255, 0, 0, 0.45);
+}
+.task-card button {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.task-card button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(255,255,255,0.3);
+}
+.task-card {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeIn 0.4s ease forwards;
+  will-change: transform; 
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.tab {
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.tab:hover {
+  transform: translateY(-3px);
+}
+
+.tab.active {
+  background: #00b37a;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 255, 120, 0.25);
+  transform: translateY(-3px);
 }

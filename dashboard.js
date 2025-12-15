@@ -14,8 +14,15 @@ function goToDashboard() {
 //for display name and email
 let usersinfo = JSON.parse(localStorage.getItem("users"));
 let currentuserinfo = usersinfo.find((user) => user.username === user1);
-document.querySelector(".name").innerHTML = currentuserinfo.fullname;
-document.querySelector(".email").innerHTML = currentuserinfo.email;
+
+// If user does not exist, force logout
+if (!currentuserinfo) {
+    alert("User data missing. Logging out...");
+    logout();
+} else {
+    document.querySelector(".name").innerHTML = currentuserinfo.fullname;
+    document.querySelector(".email").innerHTML = currentuserinfo.email;
+}
 
 function goBackProfile() {
   goBack();
@@ -341,18 +348,45 @@ function editTask(taskId) {
 function autoUpdatePending() {
   let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
   let now = Date.now();
+  let updated = false;
 
   tasks = tasks.map((task) => {
     if (task.status === "New") {
       let diff = now - task.createdAt;
       if (diff >= 3600000) {
         task.status = "Pending";
+        updated = true;
       }
     }
     return task;
   });
 
-  localStorage.setItem("tasks", JSON.stringify(tasks));
+  if (updated) {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }
+
+  return updated; // tells interval if UI needs update
+}
+
+function updateTaskStatusInUI() {
+  const taskCards = document.querySelectorAll(".task-card");
+
+  taskCards.forEach(card => {
+    const title = card.querySelector("h2").innerText;
+    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+    let task = tasks.find(t => t.title.toUpperCase() === title);
+
+    if (!task) return;
+
+    // safer way to find status element
+    let statusElement = Array.from(card.querySelectorAll("p"))
+      .find(p => p.innerHTML.includes("Status"));
+
+    if (statusElement) {
+      statusElement.innerHTML = `<b>Status:</b> ${task.status}`;
+    }
+  });
 }
 
 window.onload = function () {
@@ -361,7 +395,7 @@ window.onload = function () {
 };
 
 setInterval(() => {
-  autoUpdatePending();
-  let activeTab = document.querySelector(".tab.active").innerText;
-  filterTasks(`${activeTab == "All Tasks" ? "All" : activeTab}`);
+  const updated = autoUpdatePending();
+  if (updated) updateTaskStatusInUI();
 }, 10000);
+
