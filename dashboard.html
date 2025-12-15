@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard – Task Manager</title>
+    <link rel="stylesheet" href="dashboard.css" />
+  </head>
+  <body onmouseup="goBack()">
+    <!-- Top Navbar -->
+    <div class="navbar">
+      <p>Hello, <span id="userName"></span> 👋</p>
+      <!-- <div class="searchDiv">
+      <input type="search" ><button class="searchName">Search</button>
+      </div> -->
+      <div>
+        <button id="dashboard" onclick="goToDashboard()">Dashboard</button>
+        <button id="profile" onclick="getToggleProfile()">Profile</button>
+        <button id="aboutus" onclick="getToggleAboutus()">Aboutus</button>
+      </div>
+    </div>
+    <div id="profileContainer">
+      <div class="profileContainer1">
+        <p class="name"></p>
+        <p class="email"></p>
+        <hr />
+        <button onclick="logout()" class="logout">Logout</button>
+        <button onclick="deleteAccount()" class="deleteacc">
+          Delete Account
+        </button>
+      </div>
+      <div>
+        <button id="back" onclick="goBackProfile()">Back</button>
+      </div>
+    </div>
+    <div id="aboutContainer">
+      <h2
+        style="
+          font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS',
+            sans-serif;
+        "
+      >
+        About
+      </h2>
+      <hr />
+      <br />
+      <p
+        style="
+          font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS',
+            sans-serif;
+        "
+      >
+        This Personal Time Management App helps users plan and track their daily
+        tasks efficiently. You can create tasks, set deadlines, assign
+        priorities, and mark them as completed. All data is saved using
+        localStorage, so your tasks stay even after you refresh or close the
+        browser. The app features a clean, user-friendly design with options to
+        edit, delete, and filter tasks, making it easy to stay organized and
+        manage your time better.
+      </p>
+    </div>
+    
+    <h1>Welcome to Task Management ...!!</h1>
+    <div class="tabs">
+      <button class="tab active" onclick="setTab('All')">All Tasks</button>
+      <button class="tab" onclick="setTab('Pending')">Pending</button>
+      <button class="tab" onclick="setTab('New')">New</button>
+      <button class="tab" onclick="setTab('Completed')">Completed</button>
+      <button class="tab" onclick="setTab('Overdue')">Overdue</button>
+    </div>
+
+    <div class="task-container"></div>
+
+    <div id="taskPopup" class="task-popup">
+      <div class="popup-content">
+        <h2>Add New Task</h2>
+
+        <label>Task Title</label>
+        <input type="text" id="taskTitle" placeholder="Enter task title" />
+
+        <label>Description</label>
+        <textarea id="taskDescription" placeholder="Task details..."></textarea>
+
+        <label>Deadline</label>
+        <input type="date" id="taskDeadline" />
+
+        <label>Priority</label>
+        <select id="taskPriority">
+          <option value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="High">High</option>
+        </select>
+
+        <div class="popup-buttons">
+          <button onclick="saveTask()">Save</button>
+          <button onclick="closeTaskPopup()">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <button class="add-btn" onclick="openTaskPopup()"><span style="font-weight:bolder; font-size: 20px;">+</span> Add Task</button>
+    <script src="dashboard.js"></script>
+  </body>
+</html>
