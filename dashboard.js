@@ -1,5 +1,5 @@
 if (!localStorage.getItem("currentUser")) {
-  window.location.href = "index.html";
+  window.location.href = "./index.html";
 }
 
 //display username
@@ -8,7 +8,7 @@ document.getElementById("userName").innerHTML = user1.toUpperCase() || "user";
 
 //dashboard
 function goToDashboard() {
-  window.location.href = "dashboard.html";
+  window.location.href = "./dashboard.html";
 }
 
 //for display name and email
@@ -17,11 +17,11 @@ let currentuserinfo = usersinfo.find((user) => user.username === user1);
 
 // If user does not exist, force logout
 if (!currentuserinfo) {
-    alert("User data missing. Logging out...");
-    logout();
+  alert("User data missing. Logging out...");
+  logout();
 } else {
-    document.querySelector(".name").innerHTML = currentuserinfo.fullname;
-    document.querySelector(".email").innerHTML = currentuserinfo.email;
+  document.querySelector(".name").innerHTML = currentuserinfo.fullname;
+  document.querySelector(".email").innerHTML = currentuserinfo.email;
 }
 
 function goBackProfile() {
@@ -57,7 +57,7 @@ function goBack() {
 //logout
 function logout() {
   localStorage.removeItem("currentUser");
-  window.location.href = "index.html";
+  window.location.href = "./index.html";
 }
 
 //delete account function
@@ -92,7 +92,7 @@ function deleteAccount() {
 
   // Redirect to login
   alert("Account deleted successfully.");
-  window.location.href = "index.html";
+  window.location.href = "./index.html";
 }
 
 //open TaskBar
@@ -218,18 +218,20 @@ function filterTasks(status) {
 
       ${
         completed
-          ? `<button ${isOverdue ? "disabled" : ""} class="delete-btn" onclick="deleteTask(${
-              task.id
-            })">
+          ? `<button ${
+              isOverdue ? "disabled" : ""
+            } class="delete-btn" onclick="deleteTask(${task.id})">
             Delete Task
         </button>`
           : `
-        <button ${isOverdue ? "disabled" : ""} class="complete-btn" onclick="updateStatus(${
-              task.id
-            }, 'Completed')">
+        <button ${
+          isOverdue ? "disabled" : ""
+        } class="complete-btn" onclick="updateStatus(${task.id}, 'Completed')">
           Mark Completed
         </button>
-        <button ${isOverdue ? "disabled" : ""} class="edit-btn" onclick="editTask(${task.id})">
+        <button ${
+          isOverdue ? "disabled" : ""
+        } class="edit-btn" onclick="editTask(${task.id})">
             Edit Task
         </button>
         <button class="delete-btn" onclick="deleteTask(${task.id})">
@@ -293,7 +295,7 @@ function editTask(taskId) {
 
   // Get updated values with current values as defaults
   let newTitle = prompt("Enter your title", task.title);
-   // title Validation
+  // title Validation
   if (!newTitle || newTitle.trim() === "") {
     alert("Title cannot be empty!");
     return;
@@ -301,27 +303,28 @@ function editTask(taskId) {
   let newDesc = prompt("Enter your description", task.description);
   let newDeadline = prompt("Enter your deadline (YYYY-MM-DD)", task.deadline);
   //date validation
-   if (!/^\d{4}-\d{2}-\d{2}$/.test(newDeadline)) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(newDeadline)) {
     alert("Invalid date format! Use YYYY-MM-DD");
     return;
   }
   let today = new Date();
-  today.setHours(0,0,0,0);
+  today.setHours(0, 0, 0, 0);
 
   let newDate = new Date(newDeadline);
-  newDate.setHours(0,0,0,0);
+  newDate.setHours(0, 0, 0, 0);
   if (newDate < today) {
     alert("Deadline must be today or future date");
     return;
   }
 
   let newPriority = prompt("Enter priority (Low, Medium, High)", task.priority);
-    // Priority validation
+  // Priority validation
   let validPriorities = ["Low", "Medium", "High"];
 
   // Capitalize first letter to match format
   if (newPriority) {
-    newPriority = newPriority.charAt(0).toUpperCase() + newPriority.slice(1).toLowerCase();
+    newPriority =
+      newPriority.charAt(0).toUpperCase() + newPriority.slice(1).toLowerCase();
   }
   if (!validPriorities.includes(newPriority)) {
     alert("Invalid priority! Allowed values: Low, Medium, High");
@@ -371,17 +374,18 @@ function autoUpdatePending() {
 function updateTaskStatusInUI() {
   const taskCards = document.querySelectorAll(".task-card");
 
-  taskCards.forEach(card => {
+  taskCards.forEach((card) => {
     const title = card.querySelector("h2").innerText;
     let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
-    let task = tasks.find(t => t.title.toUpperCase() === title);
+    let task = tasks.find((t) => t.title.toUpperCase() === title);
 
     if (!task) return;
 
     // safer way to find status element
-    let statusElement = Array.from(card.querySelectorAll("p"))
-      .find(p => p.innerHTML.includes("Status"));
+    let statusElement = Array.from(card.querySelectorAll("p")).find((p) =>
+      p.innerHTML.includes("Status")
+    );
 
     if (statusElement) {
       statusElement.innerHTML = `<b>Status:</b> ${task.status}`;
@@ -398,4 +402,3 @@ setInterval(() => {
   const updated = autoUpdatePending();
   if (updated) updateTaskStatusInUI();
 }, 10000);
-

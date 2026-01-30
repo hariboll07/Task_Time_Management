@@ -81,14 +81,14 @@ function signUpValidation() {
 
     if (userExists) {
       alert("User already exists! Try a different username or email.");
-      resetForm(form1)
+      resetForm(form1);
       return;
     }
 
     //if user not exits it will run
     let userData = {
       username: uname.value.trim(),
-      fullname:fname.value.trim(),
+      fullname: fname.value.trim(),
       email: email.value.trim(),
       password: password.value.trim(),
     };
@@ -112,13 +112,12 @@ function userChecker() {
     setSuccess(uname);
   }
 }
-function checkName(){
-  let fname1=fname.value.trim()
-  if(fname1===""){
-    setError(fname,"Fullname cannot be empty")
-  }
-  else{
-    setSuccess(fname)
+function checkName() {
+  let fname1 = fname.value.trim();
+  if (fname1 === "") {
+    setError(fname, "Fullname cannot be empty");
+  } else {
+    setSuccess(fname);
   }
 }
 function checkEmail() {
@@ -178,10 +177,10 @@ function signInValidation() {
   if (userFound) {
     alert("Login Successful!");
     localStorage.setItem("currentUser", userFound.username);
-    window.location.href = "dashboard.html";
+    window.location.href = "./dashboard.html";
   } else {
     alert("Invalid Username or Password");
-    resetForm(form2)
+    resetForm(form2);
   }
 }
 
